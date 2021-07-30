@@ -68,7 +68,6 @@ const useStyles = makeStyles({
         display: "flex",
         fontWeight: "bold",
         marginBottom: "-1px",
-        fontColor: "rgb(122, 122, 108)",
         fontFamily: "Dancing Script",
         paddingLeft: "10px"
     },
@@ -144,7 +143,7 @@ function RecipeList() {
                     <div>
                         <Card style={{ backgroundColor: "white" }} component={Paper} elevation={10} class="recipeAnimation">
                             <CardContent className={classes.cards}>
-                                <Typography class={classes.recipeName} color="textSecondary" gutterBottom>
+                                <Typography className={classes.recipeName}  gutterBottom>
                                     {recipe.title}
                                 </Typography>
                                 <Divider />
@@ -182,7 +181,7 @@ function RecipeList() {
             </div>
             <div style={{display: "flex",justifyContent: "center"}}>
             <Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Previous</Button>
-            <Link to="/menu" style={{ textDecoration: 'none' }}><Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Back</Button></Link>
+            <Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }} onClick={() => history.goBack()}>Back</Button>
             <Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Next</Button>
             </div>
         </div>);
