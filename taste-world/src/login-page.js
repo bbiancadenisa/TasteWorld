@@ -5,6 +5,9 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
+import axios from 'axios';
+import { useState } from 'react';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
 
@@ -40,14 +43,29 @@ const useStyles = makeStyles((theme) => ({
   
 }));
 
-
-
 export default function LoginPage() {
 
-  const classes = useStyles();
+  const [username, setUserName] = useState('');
+  const [password, setPassword] = useState('');
+  const history = useHistory();
+  const [error,setError] = useState();
 
-  const onFormSubmit = () => {
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const payload = {
+      username: username,
+      password: password
+    }
+    try {
+        let res = await axios.post('http://localhost:3001/login', payload)
+        history.push("/menu"); 
+    } catch (e) {
+        console.log(e);
+        setError(e);
+    } 
   }
+
+  const classes = useStyles();
 
   return (
     <div className={classes.logInPage}>
@@ -60,13 +78,15 @@ export default function LoginPage() {
             Log in
           </Typography>
 
-          <form className={classes.form}>
+          <form onSubmit={onSubmit} className={classes.form}>
 
-            <TextField required id="email" label="email" name="email" className={classes.text}/>
+            <TextField value={username} onChange={(e) => setUserName(e.target.value)} required id="username" label="username" name="username" className={classes.text}/>
 
-            <TextField required name="password" label="password" type="password" id="password" className={classes.text}/>
+            <TextField value={password} onChange={(e) => setPassword(e.target.value)} required name="password" label="password" type="password" id="password" className={classes.text}/>
 
-            <Button type="submit" variant="contained" onClick={() => onFormSubmit()} className={classes.submit}>
+            {error && <Typography style={{color: "red"}} >Eroare la intoducerea datelor!</Typography>}
+
+            <Button type="submit" variant="contained" className={classes.submit}>
               Log In
             </Button>
 
