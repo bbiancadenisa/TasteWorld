@@ -15,9 +15,9 @@ function App() {
         <Header/>
       <Switch>
         <Route exact path="/" component={LoginPage}/>
-        <Route path="/recipe-list" component={RecipeList}/> 
-        <Route path="/add-recipe" component={AddRecipe}/> 
-        <Route path="/menu" component={Menu}/> 
+        <Route exact path="/recipe-list" component={RecipeList}/> 
+        <Route exact path="/add-recipe" component={AddRecipe}/> 
+        <Route exact path="/menu" component={Menu}/> 
       </Switch>
       </div>
     </Router>

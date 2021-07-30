@@ -13,11 +13,11 @@ import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles({
 
-    content:{
+    content: {
         fontSize: "25px",
         fontFamily: "Dancing Script",
         color: "rgb(41, 41, 36)",
-        paddingLeft:"10px"
+        paddingLeft: "10px"
     },
 
     modalWrapper: {
@@ -38,7 +38,7 @@ const useStyles = makeStyles({
         borderRadius: "10px",
         width: 500
     },
-   
+
 
 
     bullet: {
@@ -87,9 +87,9 @@ const useStyles = makeStyles({
 
     },
 
-    
 
-    
+
+
 });
 
 function RecipeList() {
@@ -138,24 +138,23 @@ function RecipeList() {
     if (!recipesList) {
         return <div></div>
     } else {
-        return (<div style={{ display: "flex" }}>
-            <Link to="/menu" style={{ textDecoration: 'none' }}><Button variant="contained"style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color:"white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Back</Button></Link>
-            <div className="recipe-list">
+        return (<div style={{ display: "flex" ,flexDirection: "column"}}>
+            <div className="recipe-list" style={{alignItems: "center",justifyContent: "center"}}>
                 {recipesList.map((recipe) => (<div key={recipe._id}>
                     <div>
-                        <Card style={{backgroundColor:"white"}}component={Paper}elevation={10} class="recipeAnimation">
-                            <CardContent  className={classes.cards}>
+                        <Card style={{ backgroundColor: "white" }} component={Paper} elevation={10} class="recipeAnimation">
+                            <CardContent className={classes.cards}>
                                 <Typography class={classes.recipeName} color="textSecondary" gutterBottom>
                                     {recipe.title}
                                 </Typography>
-                                <Divider/>
+                                <Divider />
                                 <Typography variant="body2" component="p" className={classes.summary}>
                                     {recipe.prepTime} minutes
                                 </Typography>
 
                             </CardContent>
                             <CardActions>
-                                <Button onClick={() => handleOpen(recipe._id)} variant="contained" style={{color:"white", backgroundColor:"rgb(2, 104, 78)"}} className={classes.learnMore}>Learn More</Button>
+                                <Button onClick={() => handleOpen(recipe._id)} variant="contained" style={{ color: "white", backgroundColor: "rgb(2, 104, 78)" }} className={classes.learnMore}>Learn More</Button>
                             </CardActions>
                         </Card>
                     </div>
@@ -170,16 +169,21 @@ function RecipeList() {
                 >
                     <div className={classes.modalWrapper}>
                         <div className={classes.modalBody}>
-                            <Typography style={ {fontFamily: "Dancing Script",backgroundColor: "rgb(2, 104, 78, 0.9)" , color:"white" ,fontWeight:"bold", fontSize:"30px", borderRadius:"10px 10px 10px 10px ", textAlign:"center",marginBottom:"10px", padding:"10px"}} >{recipe.title}</Typography> 
-                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Preparation time: {recipe.prepTime} min</Typography>
-                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Ingredients:  {recipe.ingredients}</Typography>
-                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Instructions:  {recipe.prepInstructions}</Typography>
-                            <div style={{display: "flex", justifyContent: "center"}}>
-                            <Button style={{backgroundColor: "rgb(2, 104, 78, 0.9)" , margin :"10px", fontWeight:"bold", color:"white"}} onClick={handleClose} variant="contained">Close me</Button>
+                            <Typography style={{ fontFamily: "Dancing Script", backgroundColor: "rgb(2, 104, 78, 0.9)", color: "white", fontWeight: "bold", fontSize: "30px", borderRadius: "10px 10px 10px 10px ", textAlign: "center", marginBottom: "10px", padding: "10px" }} >{recipe.title}</Typography>
+                            <Typography className={classes.content} style={{ marginBottom: "5px" }}>Preparation time: {recipe.prepTime} min</Typography>
+                            <Typography className={classes.content} style={{ marginBottom: "5px" }}>Ingredients:  {recipe.ingredients}</Typography>
+                            <Typography className={classes.content} style={{ marginBottom: "5px" }}>Instructions:  {recipe.prepInstructions}</Typography>
+                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                <Button style={{ backgroundColor: "rgb(2, 104, 78, 0.9)", margin: "10px", fontWeight: "bold", color: "white" }} onClick={handleClose} variant="contained">Close me</Button>
                             </div>
                         </div>
                     </div>
                 </Modal>}
+            </div>
+            <div style={{display: "flex",justifyContent: "center"}}>
+            <Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Previous</Button>
+            <Link to="/menu" style={{ textDecoration: 'none' }}><Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Back</Button></Link>
+            <Button variant="contained" style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color: "white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Next</Button>
             </div>
         </div>);
     }

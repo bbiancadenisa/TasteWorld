@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor:"rgb(2, 104, 78)",
     margin:"20px 0 40px 0",
     width: 250,   
+    color: "white"
   },
 
   login:{
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme) => ({
     width:"350px",
     margin:"15px"
   },  
+  logInPage:{
+    height: "90vh"
+  }
   
 }));
 
