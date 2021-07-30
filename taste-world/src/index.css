@@ -1,42 +1,31 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica' 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+.recipe-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  
 }
 
-.add-recipe{
-  max-width: 400px;
-  margin: 0 auto;
-  text-align: center;
+.recipeAnimation{
+  transition: all 0.3s ease-out;
+  margin: 20px;
+  width:300px;
+  
+  
 }
 
-.add-recipe label {
-  text-align: left;
-  display: block;
+.recipeAnimation:hover {
+  transition: all 0.2s ease-out;
+  box-shadow: 0px 4px 8px rgba(70, 68, 68, 0.5);
+  
 }
+  
 
-.add-recipe input, .add-recipe textarea{
-  width: 100%;
-  padding: 6px 10 px;
-  margin: 10px 0;
-  border: 1px solid #ddd;
-  box-sizing:border-box;
-  display: block;
-}
 
-.add-recipe button {
-  border: 0;
-  padding: 8px;
-  border-radius: 8px;
-  cursor: pointer;
-  background-color: rgb(2, 104, 78);
-}
+
+
 

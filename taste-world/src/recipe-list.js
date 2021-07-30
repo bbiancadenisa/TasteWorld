@@ -1,15 +1,102 @@
 import { useState, useEffect } from 'react';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
+import Card from '@material-ui/core/Card';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '@material-ui/core/Modal';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
 
+const useStyles = makeStyles({
+
+    content:{
+        fontSize: "25px",
+        fontFamily: "Dancing Script",
+        color: "rgb(41, 41, 36)",
+        paddingLeft:"10px"
+    },
+
+    modalWrapper: {
+        height: "100%",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignContent: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+    modalBody: {
+        display: "flex",
+        flexDirection: "column",
+        backgroundColor: 'white',
+        margin: "0 auto",
+        borderRadius: "10px",
+        width: 500
+    },
+   
+
+
+    bullet: {
+        display: 'inline-block',
+        margin: '0 2px',
+        transform: 'scale(0.8)',
+    },
+    title: {
+        fontSize: 14,
+    },
+    pos: {
+        marginBottom: 12,
+    },
+
+    recipeTitle: {
+        fontSize: "30px",
+        marginBottom: "30px",
+        color: "rgb(41, 41, 36)",
+        fontWeight: "bold",
+        paddingTop: "5px",
+        fontFamily: "Dancing Script",
+
+    },
+
+    recipeName: {
+        fontSize: "30px",
+        display: "flex",
+        fontWeight: "bold",
+        fontColor: "rgb(122, 122, 108)",
+        fontFamily: "Dancing Script",
+        paddingLeft: "10px"
+    },
+
+    summary: {
+        display: "flex",
+        fontWeight: "bold",
+        paddingLeft: "10px",
+        fontSize: "20px"
+
+    },
+
+    learnMore: {
+        marginLeft: "100px",
+        fontWeight: "bold"
+
+    },
+
+    
+
+    
+});
 
 function RecipeList() {
 
+    const classes = useStyles();
+
     const [recipesList, setRecipesList] = useState(null);
-    const [open,setOpen] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [recipe, setRecipe] = useState();
     console.log(recipesList)
 
     useEffect(async () => {
@@ -20,52 +107,66 @@ function RecipeList() {
         setRecipesList(result.data);
     }, [])
 
-    // useEffect(async () => {
-    //     const result = await axios({
-    //         url: `http://localhost:3001/all-recipes${id}`,
-    //         method: "GET"
-    //     })
-    //     setRecipesList(result.data);
-    // }, [open])
-
-    // const openModal = (recipe) => {
-    //     alert("Reteta");
-    // }
-
-    
-
-    const handleOpen = () => {
+    const handleOpen = async (id) => {
+        const result = await axios({
+            url: `http://localhost:3001/single-recipe/${id}`,
+            method: "GET"
+        })
+        setRecipe(result.data);
         setOpen(true);
-      };
-    
-      const handleClose = () => {
+    };
+
+    const handleClose = () => {
         setOpen(false);
-      };
+    };
 
     if (!recipesList) {
         return <div></div>
     } else {
-        return (
+        return (<div style={{ display: "flex" }}>
+            <Link to="/menu" style={{ textDecoration: 'none' }}><Button variant="contained"style={{ margin: "25px", backgroundColor: "rgb(2, 104, 78)", color:"white", borderRadius: "8px", cursor: "pointer", fontWeight: "bold", alignSelf: "flex-start" }}>Back</Button></Link>
             <div className="recipe-list">
-                <h1>This is the recipe-list</h1>
-                {recipesList.map((recipe) => (
-                    <div className="recipe-preview" key={recipe.id}>
-                        <h2>{recipe.title}</h2>
-                        <p>{recipe.ingredients}</p>
-                        <Button onClick={handleOpen}>Modal</Button>
+                {recipesList.map((recipe) => (<div key={recipe._id}>
+                    <div>
+                        <Card style={{backgroundColor:"white"}}component={Paper}elevation={10} class="recipeAnimation">
+                            <CardContent  className={classes.cards}>
+                                <Typography class={classes.recipeName} color="textSecondary" gutterBottom>
+                                    {recipe.title}
+                                </Typography>
+
+                                <Typography variant="body2" component="p" className={classes.summary}>
+                                    {recipe.prepTime} minutes
+                                </Typography>
+
+                            </CardContent>
+                            <CardActions>
+                                <Button onClick={() => handleOpen(recipe._id)} variant="contained" style={{color:"white", backgroundColor:"rgb(2, 104, 78)"}} className={classes.learnMore}>Learn More</Button>
+                            </CardActions>
+                        </Card>
                     </div>
+                </div>
+
                 ))}
-                <Modal
+                {recipe && <Modal
                     open={open}
                     onClose={handleClose}
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
                 >
-                    <p>Hello</p>
-                </Modal>
-                <Link to="/menu"><Button variant="contained" color="primary" style={{ margin: "25px" }}>Back</Button></Link>
+                    <div className={classes.modalWrapper}>
+                        <div className={classes.modalBody}>
+                            <Typography style={ {fontFamily: "Dancing Script",backgroundColor: "rgb(2, 104, 78, 0.9)" , color:"white" ,fontWeight:"bold", fontSize:"30px", borderRadius:"10px 10px 10px 10px ", textAlign:"center",marginBottom:"10px", padding:"10px"}} >{recipe.title}</Typography> 
+                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Preparation time: {recipe.prepTime} min</Typography>
+                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Ingredients:  {recipe.ingredients}</Typography>
+                            <Typography className={classes.content} style={{marginBottom:"5px"}}>Instructions:  {recipe.prepInstructions}</Typography>
+                            <div style={{display: "flex", justifyContent: "center"}}>
+                            <Button style={{backgroundColor: "rgb(2, 104, 78, 0.9)" , margin :"10px", fontWeight:"bold", color:"white"}} onClick={handleClose} variant="contained">Close me</Button>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>}
             </div>
-        );
+        </div>);
     }
 }
 
