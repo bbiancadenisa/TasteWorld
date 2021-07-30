@@ -4,11 +4,12 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import Modal from '@material-ui/core/Modal';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
+import Divider from '@material-ui/core/Divider';
 
 const useStyles = makeStyles({
 
@@ -66,6 +67,7 @@ const useStyles = makeStyles({
         fontSize: "30px",
         display: "flex",
         fontWeight: "bold",
+        marginBottom: "-1px",
         fontColor: "rgb(122, 122, 108)",
         fontFamily: "Dancing Script",
         paddingLeft: "10px"
@@ -93,6 +95,7 @@ const useStyles = makeStyles({
 function RecipeList() {
 
     const classes = useStyles();
+    const history = useHistory();
 
     const [recipesList, setRecipesList] = useState(null);
     const [open, setOpen] = useState(false);
@@ -105,6 +108,18 @@ function RecipeList() {
             method: "GET"
         })
         setRecipesList(result.data);
+    }, [])
+
+    useEffect(async () => {
+        try {
+            const result = await axios({
+                url: `http://localhost:3001/verifyUser`,
+                method: "GET"
+            })
+        }
+        catch (e) {
+            history.push("/");
+        }
     }, [])
 
     const handleOpen = async (id) => {
@@ -133,7 +148,7 @@ function RecipeList() {
                                 <Typography class={classes.recipeName} color="textSecondary" gutterBottom>
                                     {recipe.title}
                                 </Typography>
-
+                                <Divider/>
                                 <Typography variant="body2" component="p" className={classes.summary}>
                                     {recipe.prepTime} minutes
                                 </Typography>

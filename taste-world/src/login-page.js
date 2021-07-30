@@ -58,6 +58,7 @@ export default function LoginPage() {
     }
     try {
         let res = await axios.post('http://localhost:3001/login', payload)
+        console.log(res);
         history.push("/menu"); 
     } catch (e) {
         console.log(e);
